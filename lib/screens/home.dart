@@ -7,6 +7,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../components/IconWithLabel.dart';
+import '../components/roundedbtn.dart';
+
+enum GenderSelection { Male, Female }
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -16,6 +19,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final inActiveColor = Color(0xff1d1e33);
+  final activeColor = Color(0x11d1e33);
+  late GenderSelection selection;
   int _height = 150;
   int _weight = 65;
   int _age = 16;
@@ -32,16 +38,33 @@ class _HomeState extends State<Home> {
             child: Row(
               children: <Widget>[
                 ReuseableCard(
-                  color: Color(0xff1d1e33),
+                  color: selection == GenderSelection.Male
+                      ? activeColor
+                      : inActiveColor,
                   myChid: IconWithLabel(
                     icon: FontAwesomeIcons.mars,
                     label: 'MALE',
                   ),
+                  onpressed: () {
+                    setState(() {
+                      selection = GenderSelection.Male;
+                    });
+                  },
                 ),
                 ReuseableCard(
-                    color: Color(0xff1d1e33),
-                    myChid: IconWithLabel(
-                        icon: FontAwesomeIcons.venus, label: 'FEMALE')),
+                  color: selection == GenderSelection.Female
+                      ? inActiveColor
+                      : activeColor,
+                  myChid: IconWithLabel(
+                    icon: FontAwesomeIcons.venus,
+                    label: 'FEMALE',
+                  ),
+                  onpressed: () {
+                    setState(() {
+                      selection = GenderSelection.Female;
+                    });
+                  },
+                ),
               ],
             ),
           ),
@@ -141,7 +164,11 @@ class _HomeState extends State<Home> {
                         children: [
                           RoundedBTN(
                             icon: FontAwesomeIcons.plus,
-                            onpress: () {},
+                            onpress: () {
+                              setState(() {
+                                _weight++;
+                              });
+                            },
                             color: Color(0xff0A0E21),
                           ),
                           SizedBox(
@@ -149,7 +176,11 @@ class _HomeState extends State<Home> {
                           ),
                           RoundedBTN(
                               icon: FontAwesomeIcons.minus,
-                              onpress: () {},
+                              onpress: () {
+                                setState(() {
+                                  _weight--;
+                                });
+                              },
                               color: Color(0xff0A0E21))
                         ],
                       )
@@ -188,7 +219,11 @@ class _HomeState extends State<Home> {
                         children: [
                           RoundedBTN(
                             icon: FontAwesomeIcons.plus,
-                            onpress: () {},
+                            onpress: () {
+                              setState(() {
+                                _age++;
+                              });
+                            },
                             color: Color(0xff0A0E21),
                           ),
                           SizedBox(
@@ -196,7 +231,11 @@ class _HomeState extends State<Home> {
                           ),
                           RoundedBTN(
                               icon: FontAwesomeIcons.minus,
-                              onpress: () {},
+                              onpress: () {
+                                setState(() {
+                                  _age--;
+                                });
+                              },
                               color: Color(0xff0A0E21))
                         ],
                       )
@@ -206,34 +245,16 @@ class _HomeState extends State<Home> {
               ],
             ),
           ),
+          ElevatedButton(
+            onPressed: () {},
+            child: Text("CALCULATE"),
+            style: ElevatedButton.styleFrom(
+              primary: Theme.of(context).accentColor,
+              // minimumSize: Size(double.infinity, 60)
+            ),
+          )
         ],
       )),
-    );
-  }
-}
-
-class RoundedBTN extends StatelessWidget {
-  final IconData icon;
-  final Function onpress;
-  final Color color;
-  const RoundedBTN(
-      {super.key,
-      required this.icon,
-      required this.onpress,
-      required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(
-        icon,
-        size: 15,
-      ),
-      onPressed: onpress(),
-      elevation: 8,
-      constraints: BoxConstraints.tightFor(height: 56, width: 56),
-      shape: CircleBorder(),
-      fillColor: color,
     );
   }
 }
