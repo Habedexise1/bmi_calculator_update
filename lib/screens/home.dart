@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_field
 
 import 'package:bmi_calculator/components/ReuseableCard.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,9 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  int _height = 150;
+  int _weight = 65;
+  int _age = 16;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,16 +53,21 @@ class _HomeState extends State<Home> {
                 Container(
                   child: Text(
                     "HEIGHT",
+                    style: TextStyle(
+                      fontSize: 25,
+                    ),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  textBaseline: TextBaseline.alphabetic,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
                   children: [
                     Container(
                       child: Text(
-                        '150',
+                        _height.toString(),
                         style: TextStyle(
-                          fontSize: 50,
+                          fontSize: 47,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -70,24 +78,162 @@ class _HomeState extends State<Home> {
                       ),
                     )
                   ],
+                ),
+                Container(
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      trackHeight: 2,
+                      activeTrackColor: Colors.white,
+                      thumbColor: Color(0xffeb1555),
+                      overlayColor: Color(0x15eb1555),
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape: RoundSliderOverlayShape(
+                        overlayRadius: 30,
+                      ),
+                    ),
+                    child: Slider(
+                      max: 220,
+                      min: 120,
+                      onChanged: (newValue) {
+                        setState(() {
+                          _height = newValue.toInt().round();
+                        });
+                      },
+                      value: _height.toDouble(),
+                    ),
+                  ),
                 )
               ],
             ),
           ),
-          // Expanded(
-          //   child: Row(
-          //     children: <Widget>[
-          //       ReuseableCard(
-          //         color: Color(0xff1d1e33),
-          //       ),
-          //       ReuseableCard(
-          //         color: Color(0xff1d1e33),
-          //       ),
-          //     ],
-          //   ),
-          // ),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                ReuseableCard(
+                  color: Color(0xff1d1e33),
+                  myChid: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text("WEIGHT"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        textBaseline: TextBaseline.alphabetic,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        children: [
+                          Container(
+                            child: Text(
+                              _weight.toString(),
+                              style: TextStyle(
+                                  fontSize: 50, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              'kg',
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundedBTN(
+                            icon: FontAwesomeIcons.plus,
+                            onpress: () {},
+                            color: Color(0xff0A0E21),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          RoundedBTN(
+                              icon: FontAwesomeIcons.minus,
+                              onpress: () {},
+                              color: Color(0xff0A0E21))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                ReuseableCard(
+                  color: Color(0xff1d1e33),
+                  myChid: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Text("AGE"),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        textBaseline: TextBaseline.alphabetic,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        children: [
+                          Container(
+                            child: Text(
+                              _age.toString(),
+                              style: TextStyle(
+                                  fontSize: 50, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Container(
+                            child: Text(
+                              'yr',
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          RoundedBTN(
+                            icon: FontAwesomeIcons.plus,
+                            onpress: () {},
+                            color: Color(0xff0A0E21),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          RoundedBTN(
+                              icon: FontAwesomeIcons.minus,
+                              onpress: () {},
+                              color: Color(0xff0A0E21))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       )),
+    );
+  }
+}
+
+class RoundedBTN extends StatelessWidget {
+  final IconData icon;
+  final Function onpress;
+  final Color color;
+  const RoundedBTN(
+      {super.key,
+      required this.icon,
+      required this.onpress,
+      required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(
+        icon,
+        size: 15,
+      ),
+      onPressed: onpress(),
+      elevation: 8,
+      constraints: BoxConstraints.tightFor(height: 56, width: 56),
+      shape: CircleBorder(),
+      fillColor: color,
     );
   }
 }
