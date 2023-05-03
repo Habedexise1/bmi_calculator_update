@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_field
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_field, use_full_hex_values_for_flutter_colors, avoid_print
 
 import 'package:bmi_calculator/components/ReuseableCard.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../components/IconWithLabel.dart';
 import '../components/roundedbtn.dart';
 
+// ignore: constant_identifier_names
 enum GenderSelection { Male, Female }
 
 class Home extends StatefulWidget {
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
   int _height = 150;
   int _weight = 65;
   int _age = 16;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +54,7 @@ class _HomeState extends State<Home> {
                   },
                 ),
                 ReuseableCard(
-                  color: selection == GenderSelection.Female
+                  color: selection == GenderSelection.Male
                       ? inActiveColor
                       : activeColor,
                   myChid: IconWithLabel(
@@ -117,7 +119,7 @@ class _HomeState extends State<Home> {
                     child: Slider(
                       max: 220,
                       min: 120,
-                      onChanged: (newValue) {
+                      onChanged: (double newValue) {
                         setState(() {
                           _height = newValue.toInt().round();
                         });
@@ -128,6 +130,7 @@ class _HomeState extends State<Home> {
                 )
               ],
             ),
+            onpressed: () {},
           ),
           Expanded(
             child: Row(
@@ -165,9 +168,9 @@ class _HomeState extends State<Home> {
                           RoundedBTN(
                             icon: FontAwesomeIcons.plus,
                             onpress: () {
-                              setState(() {
-                                _weight++;
-                              });
+                              // setState(() {
+                              //   _weight++;
+                              // });
                             },
                             color: Color(0xff0A0E21),
                           ),
@@ -177,15 +180,16 @@ class _HomeState extends State<Home> {
                           RoundedBTN(
                               icon: FontAwesomeIcons.minus,
                               onpress: () {
-                                setState(() {
-                                  _weight--;
-                                });
+                                // setState(() {
+                                //   _weight--;
+                                // });
                               },
                               color: Color(0xff0A0E21))
                         ],
                       )
                     ],
                   ),
+                  onpressed: () {},
                 ),
                 ReuseableCard(
                   color: Color(0xff1d1e33),
@@ -218,29 +222,32 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RoundedBTN(
+                            color: Color(0xff0A0E21),
                             icon: FontAwesomeIcons.plus,
                             onpress: () {
-                              setState(() {
-                                _age++;
-                              });
+                              // setState(() {
+                              //   _age++;
+                              // });
                             },
-                            color: Color(0xff0A0E21),
                           ),
                           SizedBox(
                             width: 5,
                           ),
                           RoundedBTN(
-                              icon: FontAwesomeIcons.minus,
-                              onpress: () {
-                                setState(() {
-                                  _age--;
-                                });
-                              },
-                              color: Color(0xff0A0E21))
+                            color: Color(0xff0A0E21),
+                            icon: FontAwesomeIcons.minus,
+                            onpress: () {
+                              print('Hello, world!');
+                              // setState(() {
+                              //   _age--;
+                              // });
+                            },
+                          ),
                         ],
                       )
                     ],
                   ),
+                  onpressed: () {},
                 ),
               ],
             ),
@@ -249,9 +256,8 @@ class _HomeState extends State<Home> {
             onPressed: () {},
             child: Text("CALCULATE"),
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).accentColor,
-              // minimumSize: Size(double.infinity, 60)
-            ),
+                primary: Theme.of(context).accentColor,
+                minimumSize: Size(double.infinity, 50)),
           )
         ],
       )),
