@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, avoid_unnecessary_containers, unused_field, use_full_hex_values_for_flutter_colors, avoid_print
 
 import 'package:bmi_calculator/components/ReuseableCard.dart';
+import 'package:bmi_calculator/methods/CalBMI.dart';
 import 'package:bmi_calculator/screens/resultScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -28,29 +29,29 @@ class _HomeState extends State<Home> {
   int _weight = 65;
   int _age = 16;
 
-  void _incrementAge() {
-    setState(() {
-      _age++;
-    });
-  }
+  // void _incrementAge() {
+  //   setState(() {
+  //     _age++;
+  //   });
+  // }
 
-  void _decrementAge() {
-    setState(() {
-      _age--;
-    });
-  }
+  // void _decrementAge() {
+  //   setState(() {
+  //     _age--;
+  //   });
+  // }
 
-  void _incrementWeight() {
-    setState(() {
-      _weight++;
-    });
-  }
+  // void _incrementWeight() {
+  //   setState(() {
+  //     _weight++;
+  //   });
+  // }
 
-  void _decrementWeight() {
-    setState(() {
-      _weight--;
-    });
-  }
+  // void _decrementWeight() {
+  //   setState(() {
+  //     _weight--;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -194,7 +195,8 @@ class _HomeState extends State<Home> {
                         children: [
                           RoundedBTN(
                             icon: FontAwesomeIcons.plus,
-                            onpress: _incrementWeight,
+                            onpress: () {},
+                            // _incrementWeight,
                             color: Color(0xff0A0E21),
                           ),
                           SizedBox(
@@ -202,7 +204,8 @@ class _HomeState extends State<Home> {
                           ),
                           RoundedBTN(
                               icon: FontAwesomeIcons.minus,
-                              onpress: _decrementWeight,
+                              onpress: () {},
+                              // _decrementWeight,
                               color: Color(0xff0A0E21))
                         ],
                       )
@@ -241,18 +244,20 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RoundedBTN(
-                            color: Color(0xff0A0E21),
-                            icon: FontAwesomeIcons.plus,
-                            onpress: _incrementAge,
-                          ),
+                              color: Color(0xff0A0E21),
+                              icon: FontAwesomeIcons.plus,
+                              onpress: () {}
+                              // _incrementAge,
+                              ),
                           SizedBox(
                             width: 5,
                           ),
                           RoundedBTN(
-                            color: Color(0xff0A0E21),
-                            icon: FontAwesomeIcons.minus,
-                            onpress: _decrementAge,
-                          ),
+                              color: Color(0xff0A0E21),
+                              icon: FontAwesomeIcons.minus,
+                              onpress: () {}
+                              // _decrementAge,
+                              ),
                         ],
                       )
                     ],
@@ -264,8 +269,16 @@ class _HomeState extends State<Home> {
           ),
           ElevatedButton(
             onPressed: () {
+              CalculateBMI calculateBMI =
+                  CalculateBMI(height: _height, weight: _weight);
               Navigator.push(
-                  context, MaterialPageRoute(builder: (ctx) => ResultScreen()));
+                  context,
+                  MaterialPageRoute(
+                      builder: (ctx) => ResultScreen(
+                            result: calculateBMI.getResult(),
+                            feedback: calculateBMI.getFeedback(),
+                            bmiResult: calculateBMI.calculateBMI(),
+                          )));
             },
             child: Text("CALCULATE"),
             style: ElevatedButton.styleFrom(
